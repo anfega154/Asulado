@@ -51,26 +51,26 @@ services:
     networks:
       - asulado-net
 
-  asulado-app:
-    build:
-      context: ..
-      dockerfile: deployment/Dockerfile
-    container_name: asulado-app
-    restart: always
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/asulado
-      SPRING_R2DBC_USERNAME: postgres
-      SPRING_R2DBC_PASSWORD: postgres
-      SPRING_LIQUIBASE_ENABLED: true
-      SPRING_LIQUIBASE_CHANGE_LOG: classpath:db/changelog/db.changelog-master.yaml
-    depends_on:
-      - postgres
-      - sonarqube
-    networks:
-      - asulado-net
+#  asulado-app:
+#    build:
+#      context: ..
+#      dockerfile: deployment/Dockerfile
+#    container_name: asulado-app
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      SPRING_PROFILES_ACTIVE: dev
+#      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/asulado
+#      SPRING_R2DBC_USERNAME: postgres
+#      SPRING_R2DBC_PASSWORD: postgres
+#      SPRING_LIQUIBASE_ENABLED: true
+#      SPRING_LIQUIBASE_CHANGE_LOG: classpath:db/changelog/db.changelog-master.yaml
+#    depends_on:
+#      - postgres
+#      - sonarqube
+#    networks:
+#      - asulado-net
 
 volumes:
   postgres_data:

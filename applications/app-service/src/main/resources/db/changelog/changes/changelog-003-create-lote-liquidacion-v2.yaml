@@ -1,0 +1,136 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-lote-liquidacion-v2
+      author: acardenas
+      comment: "Create LOTE_LIQUIDACION table v2 - Lotes de liquidación para procesamiento de pagos"
+      changes:
+        - createTable:
+            tableName: LOTE_LIQUIDACION
+            columns:
+              - column:
+                  name: ID_LOTE_LIQUIDACION_PK
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: FE_DISPERSION
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_CONFIRMACION_DISPERSION
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_CIERRE_DISPERSION_Y_CONFIRMACION_LIQUIDACION
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_CIERRE_LIQUIDACION
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_CIERRE_NOVEDADES
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_PERIODO_LIQUIDACION
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_ESTADO
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                  remarks: "Estados: [NUEVO, APROBADO, LIQUIDADO]"
+              - column:
+                  name: NM_CANTIDAD_PARTICIPANTES
+                  type: INTEGER
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_CANTIDAD_TERCEROS
+                  type: INTEGER
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_CANTIDAD_PAGOS
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_BRUTO_TOTAL_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_DEDUCCIONES_TOTAL_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_NETO_TOTAL_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_BRUTO_TOTAL_TERCEROS_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_DEDUCCIONES_TOTAL_TERCEROS_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_NETO_TOTAL_TERCEROS_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_BRUTO_PARTICIPANTES_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_DEDUCCIONES_PARTICIPANTES_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_NETO_PARTICIPANTES_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_RAZON_LOTE
+                  type: VARCHAR(255)
+              - column:
+                  name: FE_CREACION_LOTE
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_ACTUALIZACION_LOTE
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

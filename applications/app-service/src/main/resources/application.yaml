@@ -1,14 +1,42 @@
-##Spring Configuration
+## Spring Configuration
 server:
   port: 8080
+
 spring:
   application:
     name: Asulado
+
   devtools:
     add-properties: false
+
+  profiles:
+    active: dev
+
   h2:
     console:
       enabled: true
       path: /h2
-  profiles:
-    include:
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/asulado-db
+    username: postgres
+    password: postgres
+    properties:
+      schema: public
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+adapters:
+  r2dbc:
+    host: localhost
+    port: 5432
+    database: asulado
+    schema: public
+    username: postgres
+    password: postgres
+
+routers:
+  paths:
+    getList: /api/v1/getList

@@ -13,5 +13,5 @@ public class ScheduledPaymentEntity {
     private String name;
     private String state;
     private BigDecimal amount;
-    private String costumer;
+    private String customer;
 }

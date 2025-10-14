@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class ScheduledPayment implements Serializable {
-    private String paymentId;
+    private BigDecimal paymentId;
     private String period;
     private String payType;
     private String identification;
@@ -15,7 +15,7 @@ public class ScheduledPayment implements Serializable {
     private String costumer;
 
 
-    public String getPaymentId() {
+    public BigDecimal getPaymentId() {
         return paymentId;
     }
 
@@ -47,7 +47,7 @@ public class ScheduledPayment implements Serializable {
         return costumer;
     }
 
-    public void setPaymentId(String paymentId) {
+    public void setPaymentId(BigDecimal paymentId) {
         this.paymentId = paymentId;
     }
 

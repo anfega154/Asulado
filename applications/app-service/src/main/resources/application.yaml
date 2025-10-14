@@ -19,11 +19,12 @@ spring:
 
   # Conexión reactiva (usada por tu aplicación)
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/asulado-db
+    host: localhost
+    port: 5432
+    database: asulado-db
     username: postgres
     password: postgres
-    properties:
-      schema: public
+    schema: "public"
 
   # Conexión JDBC (usada por Liquibase)
   datasource:

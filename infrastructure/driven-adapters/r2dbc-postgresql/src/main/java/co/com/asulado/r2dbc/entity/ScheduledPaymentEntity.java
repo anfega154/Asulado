@@ -14,4 +14,4 @@ public class ScheduledPaymentEntity {
     private String state;
     private BigDecimal amount;
     private String customer;
-66666666{6{6{6{<<<<6{<<<<<<<<6{6<<<<<<<<<<<<<<<<<<<<<6{6{66{{666<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<}
+}

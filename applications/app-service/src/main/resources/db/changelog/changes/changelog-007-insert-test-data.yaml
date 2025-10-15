@@ -25,6 +25,7 @@ databaseChangeLog:
               - column: { name: identification, value: "1001" }
               - column: { name: name, value: "Andrés Gañán" }
               - column: { name: company_id, valueNumeric: 1 }
+              - column: { name: identification_type, value: "CC" }
 
         - insert:
             tableName: customer
@@ -33,6 +34,7 @@ databaseChangeLog:
               - column: { name: identification, value: "1002" }
               - column: { name: name, value: "María Pérez" }
               - column: { name: company_id, valueNumeric: 1 }
+              - column: { name: identification_type, value: "CC" }
 
         - insert:
             tableName: customer
@@ -41,25 +43,26 @@ databaseChangeLog:
               - column: { name: identification, value: "1003" }
               - column: { name: name, value: "Carlos Torres" }
               - column: { name: company_id, valueNumeric: 2 }
+              - column: { name: identification_type, value: "NIT" }
 
         # === PAYMENT TYPE ===
         - insert:
             tableName: payment_type
             columns:
               - column: { name: id, valueNumeric: 1 }
-              - column: { name: name, value: "Nómina" }
+              - column: { name: name, value: "Pago programado" }
 
         - insert:
             tableName: payment_type
             columns:
               - column: { name: id, valueNumeric: 2 }
-              - column: { name: name, value: "Bonificación" }
+              - column: { name: name, value: "Pago solicitado" }
 
         - insert:
             tableName: payment_type
             columns:
               - column: { name: id, valueNumeric: 3 }
-              - column: { name: name, value: "Comisión" }
+              - column: { name: name, value: "Pago completado" }
 
         # === PAYMENT STATUS ===
         - insert:

@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-deduccion
+      author: acardenas
+      comment: "Crear tabla DEDUCCION - Deducciones aplicables a los pagos (retenciones, embargos, etc.)"
+      changes:
+        - createTable:
+            tableName: DEDUCCION
+            columns:
+              - column:
+                  name: ID_DEDUCCION_PK
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ID_PARTICIPANTE_FK
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ID_REFERENCIA_EXTERNO_DEDUCCION
+                  type: VARCHAR(50)
+              - column:
+                  name: SN_ES_ADICIONAL
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_TIPO
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                  remarks: "Tipos: [EPS, AFP]"
+              - column:
+                  name: DS_NOMBRE
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_TIPO_DEDUCCION
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                  remarks: "Tipos: [PORCENTAJE, VALOR]"
+              - column:
+                  name: NM_PORCENTAJE
+                  type: NUMERIC
+              - column:
+                  name: NM_VALOR
+                  type: BIGINT
+              - column:
+                  name: NM_VALOR_ORIGEN
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_MONEDA
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_TASA_CAMBIO
+                  type: NUMERIC
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_LOCAL
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_PERIODICIDAD
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_FRECUENCIA
+                  type: VARCHAR(50)
+              - column:
+                  name: NM_CANTIDAD_PAGOS
+                  type: INTEGER
+              - column:
+                  name: NM_NUMERO_PAGO
+                  type: INTEGER
+              - column:
+                  name: DS_ESTADO_DEDUCCION
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_INICIO
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_FIN
+                  type: DATE
+              - column:
+                  name: ID_TERCERO_FK
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: DEDUCCION
+            baseColumnNames: ID_PARTICIPANTE_FK
+            referencedTableName: PARTICIPANTE
+            referencedColumnNames: ID_PARTICIPANTE_PK
+            constraintName: FK_DEDUCCION_PARTICIPANTE
+        - addForeignKeyConstraint:
+            baseTableName: DEDUCCION
+            baseColumnNames: ID_TERCERO_FK
+            referencedTableName: TERCERO
+            referencedColumnNames: TERCERO_PK
+            constraintName: FK_DEDUCCION_TERCERO
+        - addUniqueConstraint:
+            tableName: DEDUCCION
+            columnNames: ID_PARTICIPANTE_FK, ID_REFERENCIA_EXTERNO_DEDUCCION, DS_TIPO, DS_NOMBRE, SN_ES_ADICIONAL
+            constraintName: UQ_DEDUCCION_PARTICIPANTE_TIPO_ADICIONAL

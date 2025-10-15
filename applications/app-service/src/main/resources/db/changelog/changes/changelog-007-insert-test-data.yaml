@@ -1,0 +1,203 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-data
+      author: andres.ganan
+      context: dev
+      changes:
+
+        - insert:
+            tableName: company
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "Asulado S.A." }
+
+        - insert:
+            tableName: company
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "Finanzas del Norte" }
+
+        - insert:
+            tableName: customer
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: identification, value: "1001" }
+              - column: { name: name, value: "Andrés Gañán" }
+              - column: { name: company_id, valueNumeric: 1 }
+              - column: { name: identification_type, value: "CC" }
+
+        - insert:
+            tableName: customer
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: identification, value: "1002" }
+              - column: { name: name, value: "María Pérez" }
+              - column: { name: company_id, valueNumeric: 1 }
+              - column: { name: identification_type, value: "CC" }
+
+        - insert:
+            tableName: customer
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: identification, value: "1003" }
+              - column: { name: name, value: "Carlos Torres" }
+              - column: { name: company_id, valueNumeric: 2 }
+              - column: { name: identification_type, value: "NIT" }
+
+        - insert:
+            tableName: payment_type
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "Pago programado" }
+
+        - insert:
+            tableName: payment_type
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "Pago solicitado" }
+
+        - insert:
+            tableName: payment_type
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "Pago completado" }
+
+        - insert:
+            tableName: payment_status
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "Pendiente" }
+
+        - insert:
+            tableName: payment_status
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "Pagado" }
+
+        - insert:
+            tableName: payment_status
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "Rechazado" }
+
+        # === PAYMENT ===
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: period, value: "2025-01" }
+              - column: { name: payment_type_id, valueNumeric: 1 }
+              - column: { name: customer_id, valueNumeric: 1 }
+              - column: { name: status_id, valueNumeric: 2 }
+              - column: { name: amount, valueNumeric: 3500000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: period, value: "2025-02" }
+              - column: { name: payment_type_id, valueNumeric: 2 }
+              - column: { name: customer_id, valueNumeric: 2 }
+              - column: { name: status_id, valueNumeric: 1 }
+              - column: { name: amount, valueNumeric: 2500000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: period, value: "2025-03" }
+              - column: { name: payment_type_id, valueNumeric: 3 }
+              - column: { name: customer_id, valueNumeric: 3 }
+              - column: { name: status_id, valueNumeric: 3 }
+              - column: { name: amount, valueNumeric: 4800000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: period, value: "2025-04" }
+              - column: { name: payment_type_id, valueNumeric: 2 }
+              - column: { name: customer_id, valueNumeric: 1 }
+              - column: { name: status_id, valueNumeric: 1 }
+              - column: { name: amount, valueNumeric: 2000000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: period, value: "2025-05" }
+              - column: { name: payment_type_id, valueNumeric: 3 }
+              - column: { name: customer_id, valueNumeric: 2 }
+              - column: { name: status_id, valueNumeric: 2 }
+              - column: { name: amount, valueNumeric: 4500000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: period, value: "2025-06" }
+              - column: { name: payment_type_id, valueNumeric: 1 }
+              - column: { name: customer_id, valueNumeric: 3 }
+              - column: { name: status_id, valueNumeric: 1 }
+              - column: { name: amount, valueNumeric: 3000000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: period, value: "2025-07" }
+              - column: { name: payment_type_id, valueNumeric: 2 }
+              - column: { name: customer_id, valueNumeric: 2 }
+              - column: { name: status_id, valueNumeric: 3 }
+              - column: { name: amount, valueNumeric: 4100000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: period, value: "2025-08" }
+              - column: { name: payment_type_id, valueNumeric: 3 }
+              - column: { name: customer_id, valueNumeric: 1 }
+              - column: { name: status_id, valueNumeric: 2 }
+              - column: { name: amount, valueNumeric: 3700000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: period, value: "2025-09" }
+              - column: { name: payment_type_id, valueNumeric: 1 }
+              - column: { name: customer_id, valueNumeric: 2 }
+              - column: { name: status_id, valueNumeric: 1 }
+              - column: { name: amount, valueNumeric: 2900000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: period, value: "2025-10" }
+              - column: { name: payment_type_id, valueNumeric: 2 }
+              - column: { name: customer_id, valueNumeric: 3 }
+              - column: { name: status_id, valueNumeric: 2 }
+              - column: { name: amount, valueNumeric: 3200000 }
+
+        - insert:
+            tableName: scheduled_payment
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: payment_id, valueNumeric: 1 }
+              - column: { name: scheduled_date, valueDate: "2025-01-15" }
+
+        - insert:
+            tableName: scheduled_payment
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: payment_id, valueNumeric: 2 }
+              - column: { name: scheduled_date, valueDate: "2025-02-15" }
+
+        - insert:
+            tableName: scheduled_payment
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: payment_id, valueNumeric: 3 }
+              - column: { name: scheduled_date, valueDate: "2025-03-15" }

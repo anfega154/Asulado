@@ -1,47 +1,145 @@
 # Proyecto Base Implementando Clean Architecture
 
-## Antes de Iniciar
+Este proyecto implementa una **API reactiva** con **Spring Boot + WebFlux**, estructurada bajo el patrón **Clean Architecture**.
 
-Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
+Repositorio en GitHub 👉 [anfega154/Asulado](https://github.com/anfega154/Asulado)
 
-Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
+---
 
-# Arquitectura
+
+## 📖 Tabla de Contenido
+- [Arquitectura](#arquitectura)
+- [Módulos del Proyecto](#módulos-del-proyecto)
+- [Domain](#domain)
+  - [Usecases](#usecases)
+- [Infrastructure](#infrastructure)
+    - [Driven Adapters](#driven-adapters)
+    - [Entry Points](#entry-points)
+- [Persistencia](#persistencia)
+- [Ejecución del Proyecto](#ejecución-del-proyecto)
+- [Clonar Repositorio](#clonar-repositorio)
+- [API REST](#api-rest)
+- [Documentación Swagger](#documentación-swagger)
+- [Pruebas](#pruebas)
+- [SonnarQube](#sonnarqube)
+
+---
+
+##  Arquitectura
+
+El proyecto está basado en **Clean Architecture**, siguiendo la plantilla de Bancolombia.  
+Esto permite mantener el **dominio protegido**, separando la lógica de negocio de los detalles técnicos.
 
 ![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
 
-## Domain
+---
 
-Es el módulo más interno de la arquitectura, pertenece a la capa del dominio y encapsula la lógica y reglas del negocio mediante modelos y entidades del dominio.
+## Módulos del Proyecto
 
-## Usecases
+### Domain
+- Contiene los **modelos del dominio** (`Pageable`, `ScheduledPayment`).
+- Define las **interfaces de repositorio** (`ScheduledPaymentRepository`).
+- Encapsula las **reglas de negocio**.
+- Se exponen los casos de uso mediante puertos (interfaces). (`ScheduledPaymentInputPort`).
+- No tiene dependencias hacia otros módulos.
 
-Este módulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lógica de aplicación y reacciona a las invocaciones desde el módulo de entry points, orquestando los flujos hacia el módulo de entities.
 
-## Infrastructure
+### Usecases
+- Implementa los **casos de uso** del sistema:
+    - Listar pagos programados.
 
-### Helpers
+Los casos de uso **orquestan la lógica de aplicación** y son invocados por los entry points.
 
-En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
+### Infrastructure
 
-Estas utilidades no están arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
-genéricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
-basadas en el patrón de diseño [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
+#### Driven Adapters
+- Implementaciones técnicas:
+    - Adaptador de persistencia con **Spring Data R2DBC** (`ScheduledPaymentRepositoryImpl`).
+    - Configuración de la base de datos reactiva (R2DBC).
+  
 
-Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
+#### Entry Points
+- **Routers + Handlers** basados en **Spring WebFlux**.
+- Documentados con **springdoc-openapi** para Swagger UI.
 
-### Driven Adapters
+### Application
+- Módulo más externo de la arquitectura.
+- Configura el arranque de Spring Boot (`MainApplication`).
+- Ensambla los módulos, resuelve dependencias y expone los casos de uso como beans.
 
-Los driven adapter representan implementaciones externas a nuestro sistema, como lo son conexiones a servicios rest,
-soap, bases de datos, lectura de archivos planos, y en concreto cualquier origen y fuente de datos con la que debamos
-interactuar.
+---
 
-### Entry Points
 
-Los entry points representan los puntos de entrada de la aplicación o el inicio de los flujos de negocio.
+## Persistencia
+- El proyecto utiliza una base de datos **reactiva** con **R2DBC**.
+- Configuración en `application.yml` para conexión a PostgreSQL.
+- Utliza liquidbase para la gestión de migraciones de esquema.
+- Esquema de ejemplo en `db/changelog/db.changelog-master.yaml`.
 
-## Application
+-----
 
-Este módulo es el más externo de la arquitectura, es el encargado de ensamblar los distintos módulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma automática, inyectando en éstos instancias concretas de las dependencias declaradas. Además inicia la aplicación (es el único módulo del proyecto donde encontraremos la función “public static void main(String[] args)”.
+## Ejecución del Proyecto
+-Requisitos:
+- Java 21+
+- Maven 8+
+- PostgreSQL 12+
 
-**Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+-Pasos:
+# Clonar repositorio
+git clone https://github.com/anfega154/Asulado.git
+cd Asulado
+- La aplicación corre en http://localhost:8080
+
+# Compilar
+./gradlew clean build
+
+# Ejecutar
+./gradlew bootRun
+
+# crear contenedores de docker
+cd deployment
+docker-compose up -d --build
+
+- La pgAdmin correrá en 👉 http://localhost:5052
+
+---
+## API REST
+| Método   | Endpoint                   | Descripción                                         |
+|----------|----------------------------|-----------------------------------------------------|
+| GET      | api/v1/scheduled-payments  | Obtiene los pagos programados con filtros dinámicos |
+| -------- |----------------------------|-----------------------------------------------------|
+
+### Documentación Swagger
+- La API está documentada con Swagger UI.
+- Acceso en 👉 http://localhost:8080/swagger-ui.html
+- OpenAPI JSON: 👉 http://localhost:8080/v3/api-docs
+
+----
+
+## Pruebas
+- El proyecto incluye pruebas unitarias
+- Frameworks: JUnit 5, Mockito
+- Ejecutar pruebas:
+```bash
+./gradlew test
+```
+- Reportes de cobertura con JaCoCo:
+```bash
+./gradlew jacocoTestReport
+```
+- Reportes en: `build/reports/jacoco/test/html/index.html`
+
+---
+
+## SonnarQube
+- Análisis de calidad de código con SonarQube.
+- El sonnar corre en http://localhost:9000 (usuario: admin, contraseña: admin)
+- Crear un token en SonarQube para el proyecto.
+- En el proyecto, configurar sonar.properties con el token generado en SonarQube.
+- Imagenes de sonnar:
+- https://drive.google.com/file/d/1IeepnCy2MbKRzsWcPfaDeDZjdjXxW492/view?usp=drive_link
+- https://drive.google.com/file/d/1eIhHQ4mcXaigZ--R83LvQrLA2ic4Bj5D/view?usp=drive_link
+```bash
+./gradlew clean build sonar
+```
+----

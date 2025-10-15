@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-participante-v2
+      author: acardenas
+      comment: "Create PARTICIPANTE table v2 - Participantes en los lotes de liquidación"
+      changes:
+        - createTable:
+            tableName: PARTICIPANTE
+            columns:
+              - column:
+                  name: ID_PARTICIPANTE_PK
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ID_PARTICIPANTE_PAGO
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ID_SOLICITUD_PAGO
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_PRODUCTO
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ID_PERSONA_FK
+                  type: BIGINT
+              - column:
+                  name: ID_LOTE_LIQUIDACION_FK
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_ESTADO_PARTICIPANTE
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_ESTADO_LIQUIDACION
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                  remarks: "Estados: [NUEVO, APROBADO, LIQUIDADO]"
+              - column:
+                  name: NM_VALOR_BRUTO_LOCAL
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_DEDUCCIONES_LOCAL
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_ROL
+                  type: VARCHAR(100)
+              - column:
+                  name: NM_VALOR_NETO_LOCAL
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: PARTICIPANTE
+            baseColumnNames: ID_PERSONA_FK
+            referencedTableName: PERSONA
+            referencedColumnNames: ID_PERSONA_PK
+            constraintName: FK_PARTICIPANTE_PERSONA
+        - addForeignKeyConstraint:
+            baseTableName: PARTICIPANTE
+            baseColumnNames: ID_LOTE_LIQUIDACION_FK
+            referencedTableName: LOTE_LIQUIDACION
+            referencedColumnNames: ID_LOTE_LIQUIDACION_PK
+            constraintName: FK_PARTICIPANTE_LOTE_LIQUIDACION
+        - addUniqueConstraint:
+            tableName: PARTICIPANTE
+            columnNames: ID_PARTICIPANTE_PAGO, ID_LOTE_LIQUIDACION_FK
+            constraintName: UQ_PARTICIPANTE_PAGO_LOTE

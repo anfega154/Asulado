@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+        file: db/changelog/changes/changelog-000-create-basic-tables.yaml
+  - include:
+        file: db/changelog/changes/changelog-005-create-persona.yaml
+  - include:
+        file: db/changelog/changes/changelog-003-create-lote-liquidacion-v2.yaml
+  - include:
+        file: db/changelog/changes/changelog-004-create-participante-v2.yaml
+  - include:
+        file: db/changelog/changes/changelog-006-create-tercero.yaml
+  - include:
+        file: db/changelog/changes/changelog-002-create-ingreso.yaml
+  - include:
+      file: db/changelog/changes/changelog-001-create-deduccion.yaml
+  - include:
+      file: db/changelog/changes/changelog-007-insert-test-data.yaml

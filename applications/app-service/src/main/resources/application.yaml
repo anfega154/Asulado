@@ -20,14 +20,12 @@ spring:
     level:
       liquibase: INFO
 
-  # 👇 Fuente JDBC (Liquibase usa esta, no R2DBC)
   datasource:
     url: jdbc:postgresql://localhost:5432/asulado
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
 
-  # 👇 Configuración explícita de Liquibase
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
@@ -37,7 +35,6 @@ spring:
     user: postgres
     password: postgres
 
-# 👇 Configuración del adaptador R2DBC para tus repositorios reactivos
 adapters:
   r2dbc:
     host: localhost

@@ -1,60 +1,59 @@
 package co.com.asulado.api;
 
-import org.assertj.core.api.Assertions;
+import co.com.asulado.api.config.ScheduledPaymentPath;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@ContextConfiguration(classes = {RouterRest.class, Handler.class})
-@WebFluxTest
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 class RouterRestTest {
 
-    @Autowired
-    private WebTestClient webTestClient;
+    @Mock
+    private Handler handler;
 
-    @Test
-    void testListenGETUseCase() {
-        webTestClient.get()
-                .uri("/api/usecase/path")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class)
-                .value(userResponse -> {
-                            Assertions.assertThat(userResponse).isEmpty();
-                        }
-                );
+    private ScheduledPaymentPath scheduledPaymentPath;
+    private RouterRest routerRest;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        scheduledPaymentPath = new ScheduledPaymentPath();
+        scheduledPaymentPath.setScheduledPayments("/api/v1/scheduled-payments");
+        routerRest = new RouterRest(scheduledPaymentPath);
     }
 
     @Test
-    void testListenGETOtherUseCase() {
+    void shouldRouteToHandlerSuccessfully() {
+        when(handler.listenListScheduledPaymentsByFilters(any()))
+                .thenReturn(ServerResponse.ok().bodyValue("Pagos programados encontrados"));
+
+        RouterFunction<ServerResponse> routerFunction = routerRest.routerFunction(handler);
+        WebTestClient webTestClient = WebTestClient.bindToRouterFunction(routerFunction).build();
+
         webTestClient.get()
-                .uri("/api/otherusercase/path")
-                .accept(MediaType.APPLICATION_JSON)
+                .uri("/api/v1/scheduled-payments")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .value(userResponse -> {
-                            Assertions.assertThat(userResponse).isEmpty();
-                        }
-                );
+                .isEqualTo("Pagos programados encontrados");
+
+        verify(handler, times(1)).listenListScheduledPaymentsByFilters(any());
     }
 
     @Test
-    void testListenPOSTUseCase() {
-        webTestClient.post()
-                .uri("/api/usecase/otherpath")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue("")
+    void shouldReturnEmptyWhenRouteDoesNotMatch() {
+        RouterFunction<ServerResponse> routerFunction = routerRest.routerFunction(handler);
+        WebTestClient webTestClient = WebTestClient.bindToRouterFunction(routerFunction).build();
+
+        webTestClient.get()
+                .uri("/api/v1/other-endpoint")
                 .exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class)
-                .value(userResponse -> {
-                            Assertions.assertThat(userResponse).isEmpty();
-                        }
-                );
+                .expectStatus().isNotFound();
     }
 }

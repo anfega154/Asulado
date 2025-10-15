@@ -36,7 +36,6 @@ public class ScheduledPaymentRepositoryImpl {
             spec = spec.bind("id", id);
         }
 
-        // Bind siempre presentes
         spec = spec.bind("limit", size)
                 .bind("offset", page * size);
 

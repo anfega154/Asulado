@@ -10,7 +10,6 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -30,7 +29,6 @@ class ScheduledPaymentUseCaseTest {
 
     @Test
     void shouldReturnPagedResultsWhenRepositoryReturnsData() {
-        // Arrange
         ScheduledPayment payment = new ScheduledPayment();
         payment.setPaymentId(BigDecimal.ONE);
         payment.setPeriod("2024-12");
@@ -48,7 +46,6 @@ class ScheduledPaymentUseCaseTest {
         when(repository.findByFilters(anyInt(), anyInt(), anyString(), anyString(), anyString(), anyLong()))
                 .thenReturn(Flux.just(pageable));
 
-        // Act & Assert
         StepVerifier.create(useCase.findByFilters(0, 10, "2024-12", "123", "CC", 1L))
                 .expectNextMatches(result -> {
                     List<ScheduledPayment> elements = result.getElements();
@@ -66,11 +63,9 @@ class ScheduledPaymentUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenRepositoryReturnsEmptyFlux() {
-        // Arrange
         when(repository.findByFilters(anyInt(), anyInt(), anyString(), anyString(), anyString(), anyLong()))
                 .thenReturn(Flux.empty());
 
-        // Act & Assert
         StepVerifier.create(useCase.findByFilters(0, 10, "2024-12", "123", "CC", 1L))
                 .expectErrorMatches(throwable ->
                         throwable instanceof IllegalStateException &&

@@ -1,11 +1,11 @@
 package co.com.asulado.r2dbc;
 
 import co.com.asulado.model.pageable.Pageable;
-import co.com.asulado.model.pageable.Pagination;
 import co.com.asulado.model.scheduledpayment.ScheduledPayment;
 import co.com.asulado.model.scheduledpayment.gateways.ScheduledPaymentRepository;
 import co.com.asulado.r2dbc.entity.ScheduledPaymentEntity;
 import co.com.asulado.r2dbc.helper.ReactiveAdapterOperations;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
         ScheduledPayment,
         ScheduledPaymentEntity,
@@ -34,16 +35,19 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
-    public Flux<Pageable<ScheduledPayment>> findByFilters(int page, int size, String sortBy, String direction, String name) {
-        return scheduledPaymentRepositoryImpl.findByFilters(page, size, sortBy, direction, name)
+    public Flux<Pageable<ScheduledPayment>> findByFilters(int page, int size, String period, String identification, String identificationType, Long id) {
+        return scheduledPaymentRepositoryImpl.findByFilters(page, size, period, identification, identificationType, id)
+                .map(entity -> mapper.map(entity, ScheduledPayment.class))
                 .collectList()
                 .map(list -> toPageable(list, page, size))
+                .doOnNext(pageable -> log.info("Paginated list of ScheduledPayments: {}", pageable.getElements()))
                 .flux()
                 .onErrorResume(e -> Flux.error(new IllegalStateException(ERROR_FETCHING + e.getMessage())));
     }
 
+
     private Pageable<ScheduledPayment> toPageable(List<ScheduledPayment> list, int page, int size) {
-        return Pagination.paginateAndSort(list, page, size, ScheduledPayment::getPaymentId);
+        return new Pageable<>(list, page, size, list.size());
     }
 
 }

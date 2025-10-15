@@ -16,8 +16,8 @@ public class ScheduledPaymentUseCase implements ScheduledPaymentInputPort {
     }
 
     @Override
-    public Flux<Pageable<ScheduledPayment>> findByFilters(int page, int size, String period, String identification, String identificationType) {
-        return scheduledPaymentRepository.findByFilters(page, size, period, identification, identificationType)
+    public Flux<Pageable<ScheduledPayment>> findByFilters(int page, int size, String period, String identification, String identificationType, Long id) {
+        return scheduledPaymentRepository.findByFilters(page, size, period, identification, identificationType, id)
                 .switchIfEmpty(Flux.error(new IllegalStateException(EMPTY_LIST_ERROR)));
     }
 }

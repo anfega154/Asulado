@@ -12,7 +12,7 @@ public class ScheduledPayment implements Serializable {
     private String name;
     private String state;
     private BigDecimal amount;
-    private String costumer;
+    private String customer;
 
 
     public BigDecimal getPaymentId() {
@@ -43,8 +43,8 @@ public class ScheduledPayment implements Serializable {
         return amount;
     }
 
-    public String getCostumer() {
-        return costumer;
+    public String getCustomer() {
+        return customer;
     }
 
     public void setPaymentId(BigDecimal paymentId) {
@@ -75,8 +75,8 @@ public class ScheduledPayment implements Serializable {
         this.amount = amount;
     }
 
-    public void setCostumer(String costumer) {
-        this.costumer = costumer;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
 }

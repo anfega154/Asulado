@@ -4,7 +4,7 @@ databaseChangeLog:
       author: andres.ganan
       context: dev
       changes:
-        # === COMPANY ===
+
         - insert:
             tableName: company
             columns:
@@ -17,7 +17,6 @@ databaseChangeLog:
               - column: { name: id, valueNumeric: 2 }
               - column: { name: name, value: "Finanzas del Norte" }
 
-        # === CUSTOMER ===
         - insert:
             tableName: customer
             columns:
@@ -45,7 +44,6 @@ databaseChangeLog:
               - column: { name: company_id, valueNumeric: 2 }
               - column: { name: identification_type, value: "NIT" }
 
-        # === PAYMENT TYPE ===
         - insert:
             tableName: payment_type
             columns:
@@ -64,7 +62,6 @@ databaseChangeLog:
               - column: { name: id, valueNumeric: 3 }
               - column: { name: name, value: "Pago completado" }
 
-        # === PAYMENT STATUS ===
         - insert:
             tableName: payment_status
             columns:
@@ -84,7 +81,6 @@ databaseChangeLog:
               - column: { name: name, value: "Rechazado" }
 
         # === PAYMENT ===
-        # Generamos 20 pagos con combinaciones diversas
         - insert:
             tableName: payment
             columns:
@@ -115,7 +111,6 @@ databaseChangeLog:
               - column: { name: status_id, valueNumeric: 3 }
               - column: { name: amount, valueNumeric: 4800000 }
 
-        # Pagos adicionales para paginación
         - insert:
             tableName: payment
             columns:
@@ -135,6 +130,56 @@ databaseChangeLog:
               - column: { name: customer_id, valueNumeric: 2 }
               - column: { name: status_id, valueNumeric: 2 }
               - column: { name: amount, valueNumeric: 4500000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: period, value: "2025-06" }
+              - column: { name: payment_type_id, valueNumeric: 1 }
+              - column: { name: customer_id, valueNumeric: 3 }
+              - column: { name: status_id, valueNumeric: 1 }
+              - column: { name: amount, valueNumeric: 3000000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: period, value: "2025-07" }
+              - column: { name: payment_type_id, valueNumeric: 2 }
+              - column: { name: customer_id, valueNumeric: 2 }
+              - column: { name: status_id, valueNumeric: 3 }
+              - column: { name: amount, valueNumeric: 4100000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: period, value: "2025-08" }
+              - column: { name: payment_type_id, valueNumeric: 3 }
+              - column: { name: customer_id, valueNumeric: 1 }
+              - column: { name: status_id, valueNumeric: 2 }
+              - column: { name: amount, valueNumeric: 3700000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: period, value: "2025-09" }
+              - column: { name: payment_type_id, valueNumeric: 1 }
+              - column: { name: customer_id, valueNumeric: 2 }
+              - column: { name: status_id, valueNumeric: 1 }
+              - column: { name: amount, valueNumeric: 2900000 }
+
+        - insert:
+            tableName: payment
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: period, value: "2025-10" }
+              - column: { name: payment_type_id, valueNumeric: 2 }
+              - column: { name: customer_id, valueNumeric: 3 }
+              - column: { name: status_id, valueNumeric: 2 }
+              - column: { name: amount, valueNumeric: 3200000 }
 
         - insert:
             tableName: scheduled_payment

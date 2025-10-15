@@ -18,6 +18,6 @@ public class RouterRest {
     private final ScheduledPaymentPath scheduledPaymentPath;
     @Bean
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
-        return route(GET(scheduledPaymentPath.getScheduledPayments()), handler::listenGETUseCase);
+        return route(GET(scheduledPaymentPath.getScheduledPayments()), handler::listenListScheduledPaymentsByFilters);
     }
 }

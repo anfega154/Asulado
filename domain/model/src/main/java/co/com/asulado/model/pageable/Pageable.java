@@ -3,15 +3,15 @@ package co.com.asulado.model.pageable;
 import java.util.List;
 
 public class Pageable<T> {
-    private List<T> content;
+    private List<T> elements;
     private int page;
     private int size;
     private long totalElements;
     private int totalPages;
     private boolean last;
 
-    public Pageable(List<T> content, int page, int size, long totalElements) {
-        this.content = content;
+    public Pageable(List<T> elements, int page, int size, long totalElements) {
+        this.elements = elements;
         this.page = page;
         this.size = size;
         this.totalElements = totalElements;
@@ -26,12 +26,12 @@ public class Pageable<T> {
         return new Pageable<>(sublist, page, size, all.size());
     }
 
-    public List<T> getContent() {
-        return content;
+    public List<T> getElements() {
+        return elements;
     }
 
-    public void setContent(List<T> content) {
-        this.content = content;
+    public void setElements(List<T> elements) {
+        this.elements = elements;
     }
 
     public int getPage() {

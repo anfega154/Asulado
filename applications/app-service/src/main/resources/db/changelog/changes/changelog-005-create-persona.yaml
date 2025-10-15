@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-persona
+      author: acardenas
+      comment: "Create PERSONA table v2 - Información de personas físicas y jurídicas del sistema"
+      changes:
+        - createTable:
+            tableName: PERSONA
+            columns:
+              - column:
+                  name: ID_PERSONA_PK
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ID_PERSONA
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CD_CODIGO
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_NOMBRE_RAZON_SOCIAL
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DS_SEGUNDO_NOMBRE
+                  type: VARCHAR(100)
+              - column:
+                  name: DS_PRIMER_APELLIDO
+                  type: VARCHAR(100)
+              - column:
+                  name: DS_SEGUNDO_APELLIDO
+                  type: VARCHAR(100)
+              - column:
+                  name: DS_TIPO_DOCUMENTO
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_NUMERO_DOCUMENTO
+                  type: VARCHAR(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FE_NACIMIENTO
+                  type: DATE
+              - column:
+                  name: SN_RESIDENTE_EXTERIOR
+                  type: BOOLEAN
+              - column:
+                  name: DS_CONDICION
+                  type: VARCHAR(50)
+              - column:
+                  name: SN_ES_ACTIVO
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+        - sql:
+            splitStatements: false
+            stripComments: true
+            sql: >
+              ALTER TABLE PERSONA
+              ADD CONSTRAINT CHK_PERSONA_UPPERCASE
+              CHECK (
+                CD_CODIGO = UPPER(CD_CODIGO) AND
+                DS_NOMBRE_RAZON_SOCIAL = UPPER(DS_NOMBRE_RAZON_SOCIAL) AND
+                (DS_SEGUNDO_NOMBRE IS NULL OR DS_SEGUNDO_NOMBRE = UPPER(DS_SEGUNDO_NOMBRE)) AND
+                (DS_PRIMER_APELLIDO IS NULL OR DS_PRIMER_APELLIDO = UPPER(DS_PRIMER_APELLIDO)) AND
+                (DS_SEGUNDO_APELLIDO IS NULL OR DS_SEGUNDO_APELLIDO = UPPER(DS_SEGUNDO_APELLIDO)) AND
+                DS_TIPO_DOCUMENTO = UPPER(DS_TIPO_DOCUMENTO) AND
+                NM_NUMERO_DOCUMENTO = UPPER(NM_NUMERO_DOCUMENTO)
+              );

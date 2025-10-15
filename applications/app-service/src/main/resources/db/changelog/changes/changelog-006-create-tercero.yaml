@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-tercero
+      author: acardenas
+      comment: "Crear tabla TERCERO - Información de terceros para liquidación"
+      changes:
+        - createTable:
+            tableName: TERCERO
+            columns:
+              - column:
+                  name: TERCERO_PK
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ID_PERSONA_FK
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ID_LOTE_LIQUIDACION_FK
+                  type: BIGINT
+              - column:
+                  name: DS_TIPO_PAGO
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                  remarks: "Tipos: [SEGURIDAD SOCIAL, LIBRANZA]"
+              - column:
+                  name: DS_ESTADO_TERCERO
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                  remarks: "Estados: [ACTIVO, RETENIDO]"
+              - column:
+                  name: DS_ESTADO_LIQUIDACION
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                  remarks: "Estados: [APROBADO, LIQUIDADO]"
+              - column:
+                  name: DS_MONEDA_ORIGEN
+                  type: VARCHAR(10)
+              - column:
+                  name: NM_VALOR_BRUTO_ORIGEN
+                  type: NUMERIC
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_BRUTO_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_DEDUCCIONES_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NM_VALOR_NETO_LOCAL
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ID_TERCERO_MAESTRO_FK
+                  type: BIGINT
+              - column:
+                  name: DS_PERIODICIDAD
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: TERCERO
+            baseColumnNames: ID_PERSONA_FK
+            referencedTableName: PERSONA
+            referencedColumnNames: ID_PERSONA_PK
+            constraintName: FK_TERCERO_PERSONA
+        - addForeignKeyConstraint:
+            baseTableName: TERCERO
+            baseColumnNames: ID_LOTE_LIQUIDACION_FK
+            referencedTableName: LOTE_LIQUIDACION
+            referencedColumnNames: ID_LOTE_LIQUIDACION_PK
+            constraintName: FK_TERCERO_LOTE_LIQUIDACION
+        - addForeignKeyConstraint:
+            baseTableName: TERCERO
+            baseColumnNames: ID_TERCERO_MAESTRO_FK
+            referencedTableName: TERCERO
+            referencedColumnNames: TERCERO_PK
+            constraintName: FK_TERCERO_MAESTRO
+        - addUniqueConstraint:
+            tableName: TERCERO
+            columnNames: ID_PERSONA_FK, ID_LOTE_LIQUIDACION_FK, DS_TIPO_PAGO
+            constraintName: UQ_TERCERO_LOTE

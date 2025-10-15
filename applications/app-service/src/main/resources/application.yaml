@@ -1,14 +1,62 @@
-##Spring Configuration
 server:
   port: 8080
+
 spring:
   application:
     name: Asulado
+
   devtools:
     add-properties: false
+
+  profiles:
+    active: dev
+
   h2:
     console:
       enabled: true
       path: /h2
-  profiles:
-    include:
+
+  logging:
+    level:
+      liquibase: INFO
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/asulado
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    drop-first: false
+    default-schema: public
+    url: jdbc:postgresql://localhost:5432/asulado
+    user: postgres
+    password: postgres
+
+adapters:
+  r2dbc:
+    host: localhost
+    port: 5432
+    database: asulado
+    schema: public
+    username: postgres
+    password: postgres
+
+routers:
+  paths:
+    scheduledPayments: /api/v1/scheduled-payments
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+cors:
+  allowed-origins: http://localhost:4200,http://localhost:8080

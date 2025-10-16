@@ -81,7 +81,7 @@ Los casos de uso **orquestan la lógica de aplicación** y son invocados por los
 ## Ejecución del Proyecto
 -Requisitos:
 - Java 21+
-- Maven 8+
+- Gradle 8+
 - PostgreSQL 12+
 
 -Pasos:
